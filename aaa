@@ -1,0 +1,9 @@
+S3
+ https://aws.amazon.com/blogs/aws/amazon-s3-update-strong-read-after-write-consistency/
+	
+EFS	
+ https://docs.aws.amazon.com/efs/latest/ug/how-it-works.html
+	
+elasticache	
+ https://aws.amazon.com/blogs/aws/amazon-elasticache-for-redis-update-sharded-clusters-engine-improvements-and-more/
+ https://redis.io/docs/manual/scaling/#redis-cluster-consistency-guarantees
