@@ -3,8 +3,10 @@ package com.example.demo.cache;
 import com.example.demo.cache.customer.CustomKeyGenerator;
 import com.example.demo.cache.customer.MyRedisCacheWriter;
 import org.springframework.cache.CacheManager;
+import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.cache.support.SimpleCacheManager;
+import org.springframework.cache.transaction.TransactionAwareCacheManagerProxy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -32,11 +34,12 @@ public class CacheConfig {
             .disableCachingNullValues()
             .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
             .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
-        return RedisCacheManager.builder()
+        CacheManager cacheManager = RedisCacheManager.builder()
                 .withCacheConfiguration("itemRedisCache", redisCacheConfiguration)
                 .cacheWriter(myRedisCacheWriter).build();
+        return new TransactionAwareCacheManagerProxy(cacheManager);
+//        return cacheManager;
     }
-
 
     @Bean(name = "inMemoryCache")
     public CacheManager inMemoryCache() {
